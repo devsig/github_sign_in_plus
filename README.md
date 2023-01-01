@@ -1,15 +1,30 @@
 # github_sign_in_plus
-
-A new Flutter project.
+Sign In With GitHub
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+Add package dependency
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```yaml
+github_sign_in_plus: ^0.0.1
+```
 
+Perform `Sign In With GitHub`
+
+```dart
+final GitHubSignIn gitHubSignIn = GitHubSignIn(
+        clientId: clientId,
+        clientSecret: clientSecret,
+        redirectUrl: redirectUrl);
+    var result = await gitHubSignIn.signIn(context);
+    switch (result.status) {
+      case GitHubSignInResultStatus.ok:
+        print(result.token)
+        break;
+
+      case GitHubSignInResultStatus.cancelled:
+      case GitHubSignInResultStatus.failed:
+        print(result.errorMessage);
+        break;
+    }
+```

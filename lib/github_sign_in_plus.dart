@@ -1,8 +1,4 @@
+library github_sign_in_plus;
 
-import 'github_sign_in_plus_platform_interface.dart';
-
-class GithubSignInPlus {
-  Future<String?> getPlatformVersion() {
-    return GithubSignInPlusPlatform.instance.getPlatformVersion();
-  }
-}
+export 'src/github_sign_in.dart';
+export 'src/github_sign_in_result.dart';
