@@ -1,6 +1,6 @@
 name: github_sign_in_plus
 description: Authenticate Using GitHub on Android & iOS You can let your users authenticate with Firebase using their GitHub accounts by integrating web-based generic OAuth Login into your app using the Firebase SDK to carry out the end to end sign-in flow.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/devsigofficial/github_sign_in_plus
 
 environment:

@@ -36,7 +36,6 @@ class _GitHubSignInPageState extends State<GitHubSignInPage> {
   Widget build(BuildContext context) {
     WebViewController controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
       ..setUserAgent(widget.userAgent ?? _userAgentMacOSX)
       ..setNavigationDelegate(
         NavigationDelegate(
