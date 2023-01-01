@@ -37,7 +37,7 @@ class _GitHubSignInPageState extends State<GitHubSignInPage> {
     WebViewController controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
-      ..setUserAgent( widget.userAgent ?? _userAgentMacOSX)
+      ..setUserAgent(widget.userAgent ?? _userAgentMacOSX)
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
@@ -63,11 +63,12 @@ class _GitHubSignInPageState extends State<GitHubSignInPage> {
       ..loadRequest(Uri.parse(widget.url));
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          centerTitle: widget.centerTitle,
-        ),
-        body: SafeArea(child: WebViewWidget(controller: controller)),);
+      appBar: AppBar(
+        title: Text(widget.title),
+        centerTitle: widget.centerTitle,
+      ),
+      body: SafeArea(child: WebViewWidget(controller: controller)),
+    );
   }
 
   @override

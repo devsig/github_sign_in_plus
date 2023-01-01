@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:github_sign_in_plus/github_sign_in_plus.dart';
+
 void main() {
-  runApp(MaterialApp(home: MyApp(),));
+  runApp(MaterialApp(
+    home: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> {
     title: 'GitHub Connection',
     centerTitle: false,
   );
+
   @override
   void initState() {
     super.initState();

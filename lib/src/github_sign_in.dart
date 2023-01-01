@@ -1,11 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'github_sign_in_page.dart';
 import 'github_sign_in_result.dart';
@@ -64,7 +63,8 @@ class GitHubSignIn {
       );
     }
 
-    if (authorizedResult == null || authorizedResult.toString().contains('access_denied')) {
+    if (authorizedResult == null ||
+        authorizedResult.toString().contains('access_denied')) {
       return GitHubSignInResult(
         GitHubSignInResultStatus.cancelled,
         errorMessage: "Sign In attempt has been cancelled.",
