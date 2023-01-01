@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,8 +41,8 @@ class GitHubSignIn {
     var authorizedResult;
 
     if (kIsWeb) {
-      authorizedResult = await launch(
-        _generateAuthorizedUrl(),
+      authorizedResult = await launchUrl(
+        Uri.parse(_generateAuthorizedUrl()),
         webOnlyWindowName: '_self',
       );
       //push data into authorized result somehow
