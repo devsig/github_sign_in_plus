@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'github_sign_in_page.dart';
@@ -37,6 +37,8 @@ class GitHubSignIn {
   });
 
   Future<GitHubSignInResult> signIn(BuildContext context) async {
+    Dio dio = Dio(); // Dio instance yaratamiz
+
     // let's authorize
     var authorizedResult;
 
@@ -46,7 +48,6 @@ class GitHubSignIn {
         webOnlyWindowName: '_self',
       );
       //push data into authorized result somehow
-
     } else {
       authorizedResult = await Navigator.of(context).push(
         MaterialPageRoute(
@@ -77,31 +78,43 @@ class GitHubSignIn {
 
     // exchange for access token
     String code = authorizedResult;
-    var response = await http.post(
-      Uri.parse(_githubAccessTokenUrl),
-      headers: {"Accept": "application/json"},
-      body: {
-        "client_id": clientId,
-        "client_secret": clientSecret,
-        "code": code
-      },
-    );
-    GitHubSignInResult result;
-    if (response.statusCode == 200) {
-      var body = json.decode(utf8.decode(response.bodyBytes));
-      result = GitHubSignInResult(
-        GitHubSignInResultStatus.ok,
-        token: body["access_token"],
+
+    try {
+      // Dio orqali POST so'rovini yuboramiz
+      var response = await dio.post(
+        _githubAccessTokenUrl,
+        data: {
+          "client_id": clientId,
+          "client_secret": clientSecret,
+          "code": code,
+          "redirect_uri": redirectUrl,
+        },
+        options: Options(
+          headers: {"Accept": "application/json"},
+        ),
       );
-    } else {
-      result = GitHubSignInResult(
-        GitHubSignInResultStatus.cancelled,
-        errorMessage:
-            "Unable to obtain token. Received: ${response.statusCode}",
+
+      GitHubSignInResult result;
+      if (response.statusCode == 200) {
+        var body = response.data;
+        result = GitHubSignInResult(
+          GitHubSignInResultStatus.ok,
+          token: body["access_token"],
+        );
+      } else {
+        result = GitHubSignInResult(
+          GitHubSignInResultStatus.failed,
+          errorMessage:
+              "Unable to obtain token. Received: ${response.statusCode}",
+        );
+      }
+      return result;
+    } catch (e) {
+      return GitHubSignInResult(
+        GitHubSignInResultStatus.failed,
+        errorMessage: e.toString(),
       );
     }
-
-    return result;
   }
 
   String _generateAuthorizedUrl() {
